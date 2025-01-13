@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Libros {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <th>Id</th>
+            <th>Titulo</th>
+            <th>Año de Publicacion</th>
+            <th>Paginas</th>
+            <th>Editorial</th>
+            <th>Autores</th>
+        </tr>
+        {% for libro in libros %}
+            <tr>
+                <td>{{ libro.id }}</td>
+                <td><a href="{{ path('autores', {'id': libro.id}) }}">{{ libro.titulo }}</a></td>
+                <td>{{ libro.anioPublicacion | date('d-m-Y') }}</td>
+                <td>{{ libro.paginas }}</td>
+                <td>{{ libro.editorial.nombre }}</td>
+                <td>
+                    {% for autor in libro.autores %}
+                        {{ autor.nombre ~ ' ' }}
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
