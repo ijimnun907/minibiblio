@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LibroController extends AbstractController
 {
-    #[Route('/libro/listar', name: 'listar')]
+    #[Route('/ap1', name: 'ap1')]
     public function listar(LibroRepository $libroRepository) : Response
     {
         $libros = $libroRepository->findLibrosOrdenadosOrdenAlfabetico();
@@ -19,7 +19,7 @@ class LibroController extends AbstractController
         ]);
     }
 
-    #[Route('/libro/listarAnio', name: 'listarAnio')]
+    #[Route('/ap2', name: 'ap2')]
     public function listarAnioDescendente(LibroRepository $libroRepository) : Response
     {
         $libros = $libroRepository->findLibrosAnioDescendente();
@@ -28,7 +28,7 @@ class LibroController extends AbstractController
         ]);
     }
 
-    #[Route('/libro/listarPalabra/{palabra}', name: 'listarPalabra')]
+    #[Route('/ap3/{palabra}', name: 'ap3')]
     public function listarPorPalabra(LibroRepository $libroRepository, string $palabra) : Response
     {
         $libros = $libroRepository->findLibroConPalabra($palabra);
@@ -37,7 +37,16 @@ class LibroController extends AbstractController
         ]);
     }
 
-    #[Route('/libro/autores/{id}', name: 'autores')]
+    #[Route('/ap4', name: 'ap4')]
+    public function listarPorEditorialNoContenerLetra(LibroRepository $libroRepository) : Response
+    {
+        $libros = $libroRepository->findLibroEditorialNoContenieneLetra();
+        return $this->render('libro/listar.html.twig', [
+            'libros' => $libros
+        ]);
+    }
+
+    #[Route('/ap0/{id}', name: 'autores')]
     public function autores(Libro $libro) : Response
     {
         $autores = $libro->getAutores();
@@ -45,4 +54,6 @@ class LibroController extends AbstractController
             'autores' => $autores
         ]);
     }
+
+
 }

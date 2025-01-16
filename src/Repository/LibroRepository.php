@@ -43,6 +43,15 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLibroEditorialNoContenieneLetra() : array
+    {
+        $letra = "a";
+        return $this->getEntityManager()
+            ->createQuery("SELECT l, e FROM App\Entity\Libro l JOIN l.editorial e WHERE e.nombre NOT LIKE :letra")
+            ->setParameter('letra', '%' . $letra . '%')
+            ->getResult();
+    }
+
 //    /**
 //     * @return Libro[] Returns an array of Libro objects
 //     */
