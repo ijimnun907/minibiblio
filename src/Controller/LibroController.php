@@ -13,7 +13,7 @@ class LibroController extends AbstractController
     #[Route('/libro/listar', name: 'listar')]
     public function listar(LibroRepository $libroRepository) : Response
     {
-        $libros = $libroRepository->findAll();
+        $libros = $libroRepository->findLibrosOrdenadosOrdenAlfabetico();
         return $this->render('libro/listar.html.twig', [
             'libros' => $libros
         ]);
