@@ -19,6 +19,15 @@ class LibroController extends AbstractController
         ]);
     }
 
+    #[Route('/libro/listarAnio', name: 'listarAnio')]
+    public function listarAnioDescendente(LibroRepository $libroRepository) : Response
+    {
+        $libros = $libroRepository->findLibrosAnioDescendente();
+        return $this->render('libro/listar.html.twig', [
+            'libros' => $libros
+        ]);
+    }
+
     #[Route('/libro/autores/{id}', name: 'autores')]
     public function autores(Libro $libro) : Response
     {

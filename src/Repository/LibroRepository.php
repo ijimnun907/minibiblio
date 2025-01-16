@@ -21,11 +21,18 @@ class LibroRepository extends ServiceEntityRepository
         parent::__construct($registry, Libro::class);
     }
 
-    public function findLibrosOrdenadosOrdenAlfabetico()
+    public function findLibrosOrdenadosOrdenAlfabetico() : array
     {
         return $this->getEntityManager()
             ->createQuery("SELECT l FROM App\Entity\Libro l ORDER BY l.titulo")
-            ->getArrayResult();
+            ->getResult();
+    }
+
+    public function findLibrosAnioDescendente()
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT l FROM App\Entity\Libro l ORDER BY l.anioPublicacion DESC")
+            ->getResult();
     }
 
 //    /**
