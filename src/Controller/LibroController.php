@@ -28,6 +28,15 @@ class LibroController extends AbstractController
         ]);
     }
 
+    #[Route('/libro/listarPalabra/{palabra}', name: 'listarPalabra')]
+    public function listarPorPalabra(LibroRepository $libroRepository, string $palabra) : Response
+    {
+        $libros = $libroRepository->findLibroConPalabra($palabra);
+        return $this->render('libro/listar.html.twig', [
+            'libros' => $libros
+        ]);
+    }
+
     #[Route('/libro/autores/{id}', name: 'autores')]
     public function autores(Libro $libro) : Response
     {

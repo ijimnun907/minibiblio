@@ -28,10 +28,18 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLibrosAnioDescendente()
+    public function findLibrosAnioDescendente() : array
     {
         return $this->getEntityManager()
             ->createQuery("SELECT l FROM App\Entity\Libro l ORDER BY l.anioPublicacion DESC")
+            ->getResult();
+    }
+
+    public function findLibroConPalabra(string $palabra) : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT l FROM App\Entity\Libro l WHERE l.titulo LIKE :palabra")
+            ->setParameter('palabra', '%' . $palabra . '%')
             ->getResult();
     }
 
