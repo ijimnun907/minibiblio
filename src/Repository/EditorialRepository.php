@@ -29,6 +29,13 @@ class EditorialRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findEditorialesOrdenadasPorLibros() : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT e FROM App\Entity\Editorial e ORDER BY SIZE(e.libros) DESC")
+            ->getResult();
+    }
+
 //    /**
 //     * @return Editorial[] Returns an array of Editorial objects
 //     */

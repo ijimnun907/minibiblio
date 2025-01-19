@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Editorial;
 use App\Entity\Libro;
 use App\Repository\LibroRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -73,5 +74,12 @@ class LibroController extends AbstractController
         ]);
     }
 
-
+    #[Route('/librosEditorial/{id}', name: 'librosEditorial')]
+    public function listarLibrosDeEditorial(Editorial $editorial)
+    {
+        $libros = $editorial->getLibros();
+        return $this->render('libro/listarLibrosDeEditoriales.html.twig', [
+            'libros' => $libros
+        ]);
+    }
 }

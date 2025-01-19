@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Editoriales {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <th>Nombre</th>
+            <th>Localidad</th>
+        </tr>
+        {% for editorial in editoriales %}
+            <tr>
+                <td><a href="{{ path('librosEditorial', {'id': editorial.id}) }}">{{ editorial.nombre }}</a></td>
+                <td>{{ editorial.localidad }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

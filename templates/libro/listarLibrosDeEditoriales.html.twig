@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Libros {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <th>Titulo</th>
+            <th>Año de Publicacion</th>
+            <th>Paginas</th>
+        </tr>
+        {% for libro in libros %}
+            <tr>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.anioPublicacion | date('d-m-Y') }}</td>
+                <td>{{ libro.paginas }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

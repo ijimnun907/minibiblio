@@ -17,4 +17,13 @@ class EditorialController extends AbstractController
             'editoriales' => $editoriales
         ]);
     }
+
+    #[Route('/ap10', 'ap10')]
+    public function listarEditorialesOrdenadas(EditorialRepository $editorialRepository) : Response
+    {
+        $editoriales = $editorialRepository->findEditorialesOrdenadasPorLibros();
+        return $this->render('editorial/listarOrdenadas.html.twig', [
+            'editoriales' => $editoriales
+        ]);
+    }
 }
