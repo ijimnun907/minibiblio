@@ -60,6 +60,13 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findLibrosOrdenadosJuntoAutores() : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT l, a FROM App\Entity\Libro l LEFT JOIN l.autores a ORDER BY l.titulo")
+            ->getResult();
+    }
+
 //    /**
 //     * @return Libro[] Returns an array of Libro objects
 //     */

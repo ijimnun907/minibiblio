@@ -55,6 +55,15 @@ class LibroController extends AbstractController
         ]);
     }
 
+    #[Route('/ap7', name: 'ap7')]
+    public function listarLibrosConAutores(LibroRepository $libroRepository) : Response
+    {
+        $libros = $libroRepository->findLibrosOrdenadosJuntoAutores();
+        return $this->render('libro/listarConAutores.html.twig', [
+            'libros' => $libros
+        ]);
+    }
+
     #[Route('/ap0/{id}', name: 'autores')]
     public function autores(Libro $libro) : Response
     {
