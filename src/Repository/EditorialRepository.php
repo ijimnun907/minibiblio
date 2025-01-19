@@ -21,6 +21,14 @@ class EditorialRepository extends ServiceEntityRepository
         parent::__construct($registry, Editorial::class);
     }
 
+    public function findEditorialesConMenosCincoLibros() : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT e, COUNT(l) AS numLibros FROM App\Entity\Editorial e LEFT JOIN e.libros l GROUP BY e.id HAVING COUNT(l) < :num")
+            ->setParameter('num', 5)
+            ->getResult();
+    }
+
 //    /**
 //     * @return Editorial[] Returns an array of Editorial objects
 //     */

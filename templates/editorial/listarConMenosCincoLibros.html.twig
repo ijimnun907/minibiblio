@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Editoriales {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <th>Nombre</th>
+            <th>Localidad</th>
+            <th>Libros</th>
+        </tr>
+        {% for editorial in editoriales %}
+            {% set e = editorial[0] %}
+            <tr>
+                <td>{{ e.nombre }}</td>
+                <td>{{ e.localidad }}</td>
+                <td>{{ editorial.numLibros }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
