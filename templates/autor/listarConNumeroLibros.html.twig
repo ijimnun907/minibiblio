@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Autores con libros {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <td>Nombre</td>
+            <td>Apellidos</td>
+            <td>Fecha de Nacimiento</td>
+            <td>Numero de Libros</td>
+        </tr>
+        {{ dump(autores) }}
+        {% for autor in autores %}
+            {% set a = autor[0] %}
+            <tr>
+                <td>{{ a.nombre }}</td>
+                <td>{{ a.apellidos }}</td>
+                <td>{{ a.fechaNacimiento | date('d/m/Y') }}</td>
+                <td>{{ autor.numLibros }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

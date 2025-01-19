@@ -21,6 +21,13 @@ class AutorRepository extends ServiceEntityRepository
         parent::__construct($registry, Autor::class);
     }
 
+    public function findAutoresOrdenadosPertenecientesLibros() : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT a, COUNT(l) AS numLibros FROM App\Entity\Autor a LEFT JOIN a.libros l GROUP BY a.id ORDER BY a.fechaNacimiento DESC")
+            ->getResult();
+    }
+
 //    /**
 //     * @return Autor[] Returns an array of Autor objects
 //     */
