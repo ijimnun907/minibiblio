@@ -35,7 +35,7 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLibroConPalabra(string $palabra) : array
+    public function findLibrosConPalabra(string $palabra) : array
     {
         return $this->getEntityManager()
             ->createQuery("SELECT l FROM App\Entity\Libro l WHERE l.titulo LIKE :palabra")
@@ -43,12 +43,20 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findLibroEditorialNoContenieneLetra() : array
+    public function findLibrosEditorialNoContenieneLetra() : array
     {
         $letra = "a";
         return $this->getEntityManager()
             ->createQuery("SELECT l, e FROM App\Entity\Libro l JOIN l.editorial e WHERE e.nombre NOT LIKE :letra")
             ->setParameter('letra', '%' . $letra . '%')
+            ->getResult();
+    }
+
+    public function findLibrosConUnAutor() : array
+    {
+        return $this->getEntityManager()
+            ->createQuery("SELECT l FROM App\Entity\Libro l WHERE SIZE(l.autores) = :numero")
+            ->setParameter('numero', 1)
             ->getResult();
     }
 

@@ -31,7 +31,7 @@ class LibroController extends AbstractController
     #[Route('/ap3/{palabra}', name: 'ap3')]
     public function listarPorPalabra(LibroRepository $libroRepository, string $palabra) : Response
     {
-        $libros = $libroRepository->findLibroConPalabra($palabra);
+        $libros = $libroRepository->findLibrosConPalabra($palabra);
         return $this->render('libro/listar.html.twig', [
             'libros' => $libros
         ]);
@@ -40,7 +40,16 @@ class LibroController extends AbstractController
     #[Route('/ap4', name: 'ap4')]
     public function listarPorEditorialNoContenerLetra(LibroRepository $libroRepository) : Response
     {
-        $libros = $libroRepository->findLibroEditorialNoContenieneLetra();
+        $libros = $libroRepository->findLibrosEditorialNoContenieneLetra();
+        return $this->render('libro/listar.html.twig', [
+            'libros' => $libros
+        ]);
+    }
+
+    #[Route('/ap5', name: 'ap5')]
+    public function listarLibrosConUnAutor(LibroRepository $libroRepository) : Response
+    {
+        $libros = $libroRepository->findLibrosConUnAutor();
         return $this->render('libro/listar.html.twig', [
             'libros' => $libros
         ]);
