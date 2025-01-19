@@ -64,7 +64,7 @@ class LibroController extends AbstractController
         ]);
     }
 
-    #[Route('/ap0/{id}', name: 'autores')]
+    #[Route('/ap8/{id}', name: 'autores')]
     public function autores(Libro $libro) : Response
     {
         $autores = $libro->getAutores();
