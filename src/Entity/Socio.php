@@ -24,10 +24,10 @@ class Socio
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $esDocente = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $esEstudiante = null;
 
     #[ORM\OneToMany(targetEntity: Libro::class, mappedBy: 'socio')]
