@@ -56,6 +56,7 @@ final class LibroFactory extends PersistentProxyObjectFactory
             'isbn' => self::faker()->isbn13(),
             'paginas' => self::faker()->numberBetween(1,1000),
             'titulo' => self::faker()->sentence(6),
+            'precioCompra' => self::faker()->numberBetween(100,10000)
         ];
     }
 
