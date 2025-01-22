@@ -33,6 +33,9 @@ class Socio
     #[ORM\OneToMany(targetEntity: Libro::class, mappedBy: 'socio')]
     private Collection $libros;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $telefono = null;
+
     public function __construct()
     {
         $this->libros = new ArrayCollection();
@@ -129,6 +132,18 @@ class Socio
                 $libro->setSocio(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTelefono(): ?string
+    {
+        return $this->telefono;
+    }
+
+    public function setTelefono(?string $telefono): static
+    {
+        $this->telefono = $telefono;
 
         return $this;
     }
