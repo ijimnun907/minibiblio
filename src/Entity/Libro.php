@@ -25,14 +25,12 @@ class Libro
     private ?int $paginas = null;
 
     #[ORM\ManyToOne(targetEntity: Editorial::class, inversedBy: 'libros')]
-    #[ORM\JoinColumn(nullable: true)]
     private ?Editorial $editorial = null;
 
     #[ORM\ManyToMany(targetEntity: Autor::class, mappedBy: 'libros')]
     private Collection $autores;
 
     #[ORM\ManyToOne(targetEntity: Socio::class,inversedBy: 'libros')]
-    #[ORM\JoinColumn(nullable: true)]
     private ?Socio $socio = null;
 
     #[ORM\Column(length: 255, unique: true)]
