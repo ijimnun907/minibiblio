@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SocioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
@@ -27,6 +29,14 @@ class Socio
 
     #[ORM\Column]
     private ?bool $esEstudiante = null;
+
+    #[ORM\OneToMany(targetEntity: Libro::class, mappedBy: 'socio')]
+    private Collection $libros;
+
+    public function __construct()
+    {
+        $this->libros = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -89,6 +99,36 @@ class Socio
     public function setEsEstudiante(bool $esEstudiante): static
     {
         $this->esEstudiante = $esEstudiante;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Libro>
+     */
+    public function getLibros(): Collection
+    {
+        return $this->libros;
+    }
+
+    public function addLibro(Libro $libro): static
+    {
+        if (!$this->libros->contains($libro)) {
+            $this->libros->add($libro);
+            $libro->setSocio($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLibro(Libro $libro): static
+    {
+        if ($this->libros->removeElement($libro)) {
+            // set the owning side to null (unless already changed)
+            if ($libro->getSocio() === $this) {
+                $libro->setSocio(null);
+            }
+        }
 
         return $this;
     }

@@ -31,6 +31,9 @@ class Libro
     #[ORM\ManyToMany(targetEntity: Autor::class, mappedBy: 'libros')]
     private Collection $autores;
 
+    #[ORM\ManyToOne(targetEntity: Socio::class,inversedBy: 'libros')]
+    private ?Socio $socio = null;
+
     public function __construct()
     {
         $this->autores = new ArrayCollection();
@@ -112,6 +115,18 @@ class Libro
         if ($this->autores->removeElement($autore)) {
             $autore->removeLibro($this);
         }
+
+        return $this;
+    }
+
+    public function getSocio(): ?Socio
+    {
+        return $this->socio;
+    }
+
+    public function setSocio(?Socio $socio): static
+    {
+        $this->socio = $socio;
 
         return $this;
     }
