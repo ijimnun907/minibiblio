@@ -31,6 +31,7 @@ class Libro
     private Collection $autores;
 
     #[ORM\ManyToOne(targetEntity: Socio::class,inversedBy: 'libros')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Socio $socio = null;
 
     #[ORM\Column(length: 255, unique: true)]
