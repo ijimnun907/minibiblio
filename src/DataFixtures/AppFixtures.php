@@ -18,7 +18,7 @@ class AppFixtures extends Fixture
 
         AutorFactory::createMany(200);
         EditorialFactory::createMany(100);
-        SocioFactory::createMany(00);
+        SocioFactory::createMany(20);
         LibroFactory::createMany(50, function (){
             return [
                 'autores' => AutorFactory::randomRange(1,3),
