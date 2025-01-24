@@ -16,18 +16,16 @@ class AppFixtures extends Fixture
         // $product = new Product();
         // $manager->persist($product);
 
-        AutorFactory::createMany(20);
-        EditorialFactory::createMany(10);
-        SocioFactory::createMany(40);
-        LibroFactory::createMany(20, function (){
+        AutorFactory::createMany(200);
+        EditorialFactory::createMany(100);
+        SocioFactory::createMany(00);
+        LibroFactory::createMany(50, function (){
             return [
                 'autores' => AutorFactory::randomRange(1,3),
-                'socio' => LibroFactory::faker()->boolean(50)
+                'socio' => LibroFactory::faker()->boolean(25)
                 ? SocioFactory::random()
                 : null,
-                'editorial' => LibroFactory::faker()->boolean(50)
-                ? EditorialFactory::random()
-                : null
+                'editorial' => EditorialFactory::random()
             ];
         });
 
