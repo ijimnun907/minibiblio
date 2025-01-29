@@ -23,8 +23,17 @@ class EditorialRepository extends ServiceEntityRepository
 
     public function findEditorialesConMenosCincoLibros() : array
     {
-        return $this->getEntityManager()
+        /*return $this->getEntityManager()
             ->createQuery("SELECT e, COUNT(l) AS numLibros FROM App\Entity\Editorial e LEFT JOIN e.libros l GROUP BY e.id HAVING COUNT(l) < :num")
+            ->setParameter('num', 5)
+            ->getResult();*/
+        return $this
+            ->createQueryBuilder('e')
+            ->addSelect("COUNT(l) AS numLibros")
+            ->leftJoin("e.libros", "l")
+            ->where("SIZE(e.libros) < :num")
+            ->groupBy("e")
+            ->getQuery()
             ->setParameter('num', 5)
             ->getResult();
     }
