@@ -24,7 +24,7 @@ class LibroRepository extends ServiceEntityRepository
     public function findLibrosOrdenadosOrdenAlfabetico() : array
     {
         return $this->getEntityManager()
-            ->createQuery("SELECT l FROM App\Entity\Libro l ORDER BY l.titulo")
+            ->createQuery("SELECT l, e FROM App\Entity\Libro l JOIN l.editorial e ORDER BY l.titulo")
             ->getResult();
     }
 
@@ -77,6 +77,11 @@ class LibroRepository extends ServiceEntityRepository
         $this->getEntityManager()->remove($libro);
     }
 
+    public function add(Libro $libro)
+    {
+        $this->getEntityManager()->persist($libro);
+    }
+
 //    /**
 //     * @return Libro[] Returns an array of Libro objects
 //     */
@@ -101,5 +106,6 @@ class LibroRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 
 }

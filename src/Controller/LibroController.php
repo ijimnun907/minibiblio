@@ -92,10 +92,17 @@ class LibroController extends AbstractController
 
         $form->handleRequest($request);
 
+        $nuevo = $libro->getId() === null;
+
         if ($form->isSubmitted() && $form->isValid()){
             try {
                 $libroRepository->save();
-                $this->addFlash('success', 'Cambios guardados con exito');
+                if ($nuevo){
+                    $this->addFlash('success', 'Vehiculo creado con exito');
+                }
+                else {
+                    $this->addFlash('success', 'Cambios guardados con exito');
+                }
                 return $this->redirectToRoute('ap1');
             }
             catch (\Exception $e){
@@ -104,7 +111,8 @@ class LibroController extends AbstractController
         }
 
         return $this->render('libro/modificar.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'libro' => $libro
         ]);
     }
 
@@ -126,5 +134,14 @@ class LibroController extends AbstractController
         return $this->render('libro/eliminar.html.twig', [
             'libro' => $libro
         ]);
+    }
+
+    #[Route('/libro/nuevo', name: 'libro_nuevo')]
+    public function nuevo(Request $request, LibroRepository $libroRepository) : Response
+    {
+        $libro = new Libro();
+        $libroRepository->add($libro);
+
+        return $this->modificar($request, $libroRepository, $libro);
     }
 }

@@ -4,7 +4,11 @@
 {% block title %} Modificar libro {% endblock %}
 
 {% block body %}
-    <h1>Datos del libro</h1>
+    {% if libro.id is null %}
+        <h1>Datos del nuevo libro</h1>
+    {% else %}
+        <h1>Modificar los datos del libro</h1>
+    {% endif %}
     {{ form_start(form) }}
         {{ form_widget(form) }}
         <a href="{{ path('ap1') }}" class="btn btn-secondary">Volver</a>
