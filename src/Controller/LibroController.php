@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Editorial;
 use App\Entity\Libro;
+use App\Form\LibroType;
 use App\Repository\LibroRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -80,6 +82,29 @@ class LibroController extends AbstractController
         $libros = $editorial->getLibros();
         return $this->render('libro/listarLibrosDeEditoriales.html.twig', [
             'libros' => $libros
+        ]);
+    }
+
+    #[Route('/libro/modificar/{id}', name: 'libro_modificar')]
+    public function modificar(Request $request, LibroRepository $libroRepository,Libro $libro) : Response
+    {
+        $form = $this->createForm(LibroType::class, $libro);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            try {
+                $libroRepository->save();
+                $this->addFlash('success', 'Cambios guardados con exito');
+                return $this->redirectToRoute('ap1');
+            }
+            catch (\Exception $e){
+                $this->addFlash('error', 'No se han podido guardar los cambios');
+            }
+        }
+
+        return $this->render('libro/modificar.html.twig', [
+            'form' => $form->createView()
         ]);
     }
 }

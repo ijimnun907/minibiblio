@@ -67,6 +67,11 @@ class LibroRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function save()
+    {
+        $this->getEntityManager()->flush();
+    }
+
 //    /**
 //     * @return Libro[] Returns an array of Libro objects
 //     */
@@ -91,4 +96,5 @@ class LibroRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 }

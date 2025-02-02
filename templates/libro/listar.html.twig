@@ -10,6 +10,7 @@
             <th>Año de Publicacion</th>
             <th>Paginas</th>
             <th>Editorial</th>
+            <th>Acciones</th>
         </tr>
         {% for libro in libros %}
             <tr>
@@ -18,6 +19,7 @@
                 <td>{{ libro.anioPublicacion | date('d-m-Y') }}</td>
                 <td>{{ libro.paginas }}</td>
                 <td>{{ libro.editorial }}</td>
+                <td><a href="{{ path('libro_modificar', {'id': libro.id}) }}">Modificar</a><a href="">Eliminar</a></td>
             </tr>
         {% endfor %}
     </table>
