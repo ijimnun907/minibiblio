@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Eliminar vehiculo</h1>
+
+    <div class="alert alert-danger">
+        El libro {{ libro.titulo }} será eliminado.
+        Esta acción no se puede deshacer!
+    </div>
+    <form method="post">
+        <a href="{{ path('ap1') }}" class="btn btn-info">Volver al listado</a>
+        <button type="submit" name="confirmar" class="btn btn-danger">Confirmar</button>
+    </form>
+{% endblock %}

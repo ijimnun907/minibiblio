@@ -72,6 +72,11 @@ class LibroRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function remove(Libro $libro)
+    {
+        $this->getEntityManager()->remove($libro);
+    }
+
 //    /**
 //     * @return Libro[] Returns an array of Libro objects
 //     */

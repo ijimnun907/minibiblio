@@ -107,4 +107,24 @@ class LibroController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    #[Route('/libro/eliminar/{id}', name: 'libro_eliminar')]
+    public function eliminar(Request $request,LibroRepository $libroRepository,Libro $libro) : Response
+    {
+        if ($request->request->has('confirmar')){
+            try {
+                $libroRepository->remove($libro);
+                $libroRepository->save();
+                $this->addFlash('success', 'Libro eliminado con éxito');
+                return $this->redirectToRoute('ap1');
+            }
+            catch (\Exception $e){
+                $this->addFlash('error', 'No se ha podido eliminar el libro');
+            }
+        }
+
+        return $this->render('libro/eliminar.html.twig', [
+            'libro' => $libro
+        ]);
+    }
 }
