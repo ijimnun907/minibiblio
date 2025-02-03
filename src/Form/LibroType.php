@@ -24,7 +24,11 @@ class LibroType extends AbstractType
     {
         $builder
             ->add('titulo', TextType::class)
-            ->add('anioPublicacion')
+            ->add('anioPublicacion', DateType::class, [
+                'widget' => 'choice',
+                'input' => 'datetime_immutable',
+                'years' => range(1900,2100)
+            ])
             ->add('paginas', IntegerType::class)
             ->add('isbn', TextType::class)
             ->add('precioCompra', MoneyType::class, [
