@@ -6,6 +6,7 @@ use App\Repository\LibroRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: LibroRepository::class)]
 class Libro
@@ -16,28 +17,38 @@ class Libro
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 1)]
+    #[Assert\NotBlank(message: 'El titulo es obligatorio')]
     private ?string $titulo = null;
 
     #[ORM\Column(type: 'date_immutable')]
     private ?\DateTimeImmutable $anioPublicacion = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Las páginas son obligatorias')]
     private ?int $paginas = null;
 
     #[ORM\ManyToOne(targetEntity: Editorial::class, inversedBy: 'libros')]
     private ?Editorial $editorial = null;
 
     #[ORM\ManyToMany(targetEntity: Autor::class, mappedBy: 'libros')]
+    #[Assert\Count(
+        min: 1,
+        minMessage: "El libro debe tener un autor como mínimo"
+    )]
     private Collection $autores;
 
     #[ORM\ManyToOne(targetEntity: Socio::class,inversedBy: 'libros')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Socio $socio = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255, unique: true, nullable: true)]
+    #[Assert\Isbn(message: "El isbn debe ser válido")]
     private ?string $isbn = null;
 
     #[ORM\Column(type: 'integer',nullable: true)]
+    #[Assert\NotBlank(message: 'El precio de compra es obligatorio')]
+    #[Assert\Positive]
     private ?int $precioCompra = null;
 
     public function __construct()
