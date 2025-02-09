@@ -57,6 +57,7 @@ final class SocioFactory extends PersistentProxyObjectFactory
             'esDocente' => self::faker()->boolean(),
             'esEstudiante' => self::faker()->boolean(),
             'nombre' => self::faker()->firstName(),
+            'telefono' => self::faker()->numerify('6## ### ###'),
         ];
     }
 

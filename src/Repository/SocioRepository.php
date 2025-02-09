@@ -21,6 +21,30 @@ class SocioRepository extends ServiceEntityRepository
         parent::__construct($registry, Socio::class);
     }
 
+    public function findSociosOrdenadosPorNombre() : array
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.nombre', 'ASC')
+            ->addOrderBy('s.apellidos', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function save()
+    {
+        $this->getEntityManager()->flush();
+    }
+
+    public function remove(Socio $socio)
+    {
+        $this->getEntityManager()->remove($socio);
+    }
+
+    public function add(Socio $socio)
+    {
+        $this->getEntityManager()->persist($socio);
+    }
+
 //    /**
 //     * @return Socio[] Returns an array of Socio objects
 //     */

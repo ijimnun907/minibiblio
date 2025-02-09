@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Socios listados {% endblock %}
+
+{% block body %}
+    <table border="1px">
+        <tr>
+            <th>Dni</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>Es docente</th>
+            <th>Es estudiante</th>
+            <th>Teléfono</th>
+            <th>Acciones</th>
+        </tr>
+        {% for socio in socios %}
+            <tr>
+                <td>{{ socio.dni }}</td>
+                <td>{{ socio.nombre }}</td>
+                <td>{{ socio.apellidos }}</td>
+                <td>{{ socio.esDocente ? 'si' : 'no' }}</td>
+                <td>{{ socio.esEstudiante ? 'si' : 'no' }}</td>
+                <td>{{ socio.telefono }}</td>
+                <td><a href="{{ path('socio_modificar', {'id': socio.id}) }}" class="btn btn-secondary">Modificar</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

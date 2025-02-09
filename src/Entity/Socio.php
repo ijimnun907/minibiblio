@@ -6,8 +6,12 @@ use App\Repository\SocioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
+#[UniqueEntity(fields: 'dni', message: 'Ya existe un socio con ese dni')]
 class Socio
 {
     #[ORM\Id]
@@ -16,12 +20,15 @@ class Socio
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Assert\Regex(pattern: '/^[0-9]{8}[A-Z]$/', message: 'El dni debe ser valido')]
     private ?string $dni;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Los apellidos no pueden estar en blanco')]
     private ?string $apellidos = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'El nombre no pueden estar en blanco')]
     private ?string $nombre = null;
 
     #[ORM\Column(type: 'boolean')]
@@ -35,6 +42,16 @@ class Socio
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telefono = null;
+
+    #[Assert\Callback]
+    public function validarOpciones(ExecutionContextInterface $context): void
+    {
+        if (!$this->esEstudiante && !$this->esDocente) {
+            $context->buildViolation('Debe ser estudiante, docente, o la dos.')
+                ->atPath('esDocente') // Puedes asociarlo a cualquier campo o a ambos
+                ->addViolation();
+        }
+    }
 
     public function __construct()
     {

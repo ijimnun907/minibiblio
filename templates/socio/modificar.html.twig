@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+
+{% block title %}
+Formulario Socios
+{% endblock %}
+
+{% block body %}
+    {% if socio.id is null %}
+        <h1>Datos del nuevo socio</h1>
+    {% else %}
+        <h1>Modificar datos de socio</h1>
+    {% endif %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <a href="{{ path('socio_listar') }}">Volver</a>
+        <button type="submit">Guardar</button>
+    {{ form_end(form) }}
+{% endblock %}
+
+
+
