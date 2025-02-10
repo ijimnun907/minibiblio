@@ -7,12 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Entity(repositoryClass: SocioRepository::class)]
 #[UniqueEntity(fields: 'dni', message: 'Ya existe un socio con ese dni')]
-class Socio
+class Socio implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -42,6 +44,17 @@ class Socio
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $telefono = null;
+
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: 'El correo no puede estar en blanco')]
+    #[Assert\Email(message: 'El correo debe ser válido')]
+    private ?string $email = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $clave = null;
+
+    #[ORM\Column]
+    private ?bool $esAdministrador = null;
 
     #[Assert\Callback]
     public function validarOpciones(ExecutionContextInterface $context): void
@@ -168,5 +181,75 @@ class Socio
     public function __toString(): string
     {
         return $this->getApellidos() . ', ' . $this->getNombre();
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getClave(): ?string
+    {
+        return $this->clave;
+    }
+
+    public function setClave(string $clave): static
+    {
+        $this->clave = $clave;
+
+        return $this;
+    }
+
+    public function getRoles()
+    {
+        $roles = ['ROLE_USER'];
+        if ($this->esAdministrador){
+            $roles = 'ROLE_ADMIN';
+        }
+        return $roles;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->getClave();
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+
+    }
+
+    public function getUsername()
+    {
+        return $this->getEmail();
+    }
+
+    public function getUserIdentifier()
+    {
+        return $this->getEmail();
+    }
+
+    public function isEsAdministrador(): ?bool
+    {
+        return $this->esAdministrador;
+    }
+
+    public function setEsAdministrador(bool $esAdministrador): static
+    {
+        $this->esAdministrador = $esAdministrador;
+
+        return $this;
     }
 }
