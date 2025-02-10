@@ -51,11 +51,12 @@ final class SocioFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+        $docente = self::faker()->boolean();
         return [
             'apellidos' => self::faker()->lastName(),
             'dni' => self::faker()->unique()->dni(),
-            'esDocente' => self::faker()->boolean(),
-            'esEstudiante' => self::faker()->boolean(),
+            'esDocente' => $docente,
+            'esEstudiante' => !$docente,
             'nombre' => self::faker()->firstName(),
             'telefono' => self::faker()->numerify('6## ### ###'),
         ];
