@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Entrar {% endblock %}
+
+{% block body %}
+    <h1>Acceso a la aplicación</h1>
+    <form method="post">
+        {% if error %}
+            <div class="card mb-2"><div class="card-body">Error de autenticación: {{ error.message }}</div></div>
+        {% endif %}
+        <input type="text" name="_username" placeholder="Usuario" required="required"/>
+        <input type="text" name="_password" placeholder="Contraseña" required="required"/>
+        <button type="submit">Entrar</button>
+    </form>
+{% endblock %}
