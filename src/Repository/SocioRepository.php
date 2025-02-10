@@ -37,6 +37,9 @@ class SocioRepository extends ServiceEntityRepository
 
     public function remove(Socio $socio)
     {
+        foreach ($socio->getLibros() as $libro){
+            $socio->removeLibro($libro);
+        }
         $this->getEntityManager()->remove($socio);
     }
 

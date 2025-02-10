@@ -51,4 +51,33 @@ class SocioController extends AbstractController
             'socio' => $socio
         ]);
     }
+
+    #[Route('/socio/eliminar/{id}', name: 'socio_eliminar')]
+    public function eliminar(Request $request, SocioRepository $socioRepository, Socio $socio) : Response
+    {
+        if ($request->request->has('confirmar')){
+            try {
+                $socioRepository->remove($socio);
+                $socioRepository->save();
+                $this->addFlash('success', 'Socio eliminado con exito');
+                return $this->redirectToRoute('socio_listar');
+            }
+            catch (\Exception $e){
+                $this->addFlash('error', 'No se ha podido eliminar el socio');
+            }
+        }
+
+        return $this->render('socio/eliminar.html.twig', [
+            'socio' => $socio
+        ]);
+    }
+
+    #[Route('/socio/nuevo', name: 'socio_nuevo')]
+    public function nuevo(Request $request, SocioRepository $socioRepository) : Response
+    {
+        $socio = new Socio();
+        $socioRepository->add($socio);
+
+        return $this->modificar($request, $socioRepository, $socio);
+    }
 }
