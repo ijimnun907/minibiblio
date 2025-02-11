@@ -27,8 +27,8 @@ class AppFixtures extends Fixture
             'esAdministrador' => true,
             'email' => 'admin@biblio.local',
             'clave' => 'admin',  // Se codificará en el Factory
-            'esDocente' => true,
-            'esEstudiante' => true
+            'esDocente' => false,
+            'esEstudiante' => false
         ]);
 
         // Crear un socio DOCENTE
