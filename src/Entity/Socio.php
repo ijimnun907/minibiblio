@@ -211,7 +211,7 @@ class Socio implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = ['ROLE_USER'];
         if ($this->esAdministrador){
-            $roles = 'ROLE_ADMIN';
+            $roles[] = 'ROLE_ADMIN';
         }
         return $roles;
     }

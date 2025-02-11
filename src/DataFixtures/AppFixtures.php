@@ -9,9 +9,15 @@ use App\Factory\LibroFactory;
 use App\Factory\SocioFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private UserPasswordHasherInterface $passwordHasher;
+    public function __construct(UserPasswordHasherInterface $passwordHasher)
+    {
+        $this->passwordHasher = $passwordHasher;
+    }
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -26,8 +32,8 @@ class AppFixtures extends Fixture
             'apellidos' => 'admin',
             'esAdministrador' => true,
             'email' => 'admin@biblio.local',
-            'clave' => 'admin',  // Se codificará en el Factory
-            'esDocente' => false,
+            'clave' => $this->passwordHasher->hashPassword(new Socio(), 'admin'),
+            'esDocente' => true,
             'esEstudiante' => false
         ]);
 
@@ -38,7 +44,7 @@ class AppFixtures extends Fixture
             'apellidos' => 'docente',
             'esAdministrador' => false,
             'email' => 'docente@biblio.local',
-            'clave' => 'docente',
+            'clave' => $this->passwordHasher->hashPassword(new Socio(), 'docente'),
             'esDocente' => true,
             'esEstudiante' => false
         ]);
@@ -50,11 +56,13 @@ class AppFixtures extends Fixture
             'apellidos' => 'estudiante',
             'esAdministrador' => false,
             'email' => 'estudiante@biblio.local',
-            'clave' => 'estudiante',
+            'clave' => $this->passwordHasher->hashPassword(new Socio(), 'estudiante'),
             'esDocente' => false,
             'esEstudiante' => true
         ]);
-        SocioFactory::createMany(20);
+        SocioFactory::createMany(20, [
+            'clave' => $this->passwordHasher->hashPassword(new Socio(), 'prueba')
+        ]);
         LibroFactory::createMany(50, function (){
             return [
                 'autores' => AutorFactory::randomRange(1,3),
