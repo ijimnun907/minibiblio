@@ -33,6 +33,11 @@
                     <a class="nav-link" href="{{ path('ap1') }}">Libros</a>
                 </li>
             {% endif %}
+            {% if is_granted('ROLE_BIBLIOTECARIO') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('socio_listar') }}">Socios</a>
+                </li>
+            {% endif %}
         </ul>
         <ul class="navbar-nav ms-auto">
             <li class="me-auto">

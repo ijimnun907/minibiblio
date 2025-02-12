@@ -17,6 +17,7 @@ class SocioController extends AbstractController
     #[Route('/socio/listar', name: 'socio_listar')]
     public function listar(SocioRepository $socioRepository) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_BIBLIOTECARIO');
         $socios = $socioRepository->findSociosOrdenadosPorNombre();
 
         return $this->render('socio/listar.html.twig', [
