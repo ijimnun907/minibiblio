@@ -54,7 +54,7 @@ class LibroVoter extends Voter
 
         switch ($attribute) {
             case self::DELETE:
-                return $subject->getSocio() === null;
+                return $this->security->isGranted('ROLE_ADMIN') && $subject->getSocio() === null;
             case self::EDIT:
                 return $this->security->isGranted('ROLE_BIBLIOTECARIO') || $subject->getSocio() === $user;
         }

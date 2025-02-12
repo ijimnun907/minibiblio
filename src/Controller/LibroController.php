@@ -124,7 +124,6 @@ class LibroController extends AbstractController
     public function eliminar(Request $request,LibroRepository $libroRepository,Libro $libro) : Response
     {
         $this->denyAccessUnlessGranted(LibroVoter::DELETE, $libro);
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($request->request->has('confirmar')){
             try {
                 $libroRepository->remove($libro);
