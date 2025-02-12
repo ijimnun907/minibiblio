@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Socio;
+use App\Form\CambiarClaveType;
 use App\Form\SocioType;
 use App\Repository\SocioRepository;
 use App\Security\SocioVoter;
@@ -10,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[IsGranted('ROLE_USER')]
@@ -87,5 +89,25 @@ class SocioController extends AbstractController
         $socioRepository->add($socio);
 
         return $this->modificar($request, $socioRepository, $socio);
+    }
+
+    #[Route('/clave/{id}', name: 'clave')]
+    public function cambiarClave(Request $request, SocioRepository $socioRepository, UserPasswordHasherInterface $passwordHasher, Socio $socio) : Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $form = $this->createForm(CambiarClaveType::class, $socio);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()){
+            $socio->setClave($passwordHasher->hashPassword($socio, $form->get('newPassword')->getData())
+            );
+            $socioRepository->save();
+            $this->addFlash('success', 'Contraseña cambiada con éxito');
+            return $this->redirectToRoute('app_portada');
+        }
+        return $this->render('socio/cambiarClave.html.twig', [
+            'form' => $form->createView(),
+            'socio' => $socio,
+        ]);
     }
 }
