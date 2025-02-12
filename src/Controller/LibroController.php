@@ -121,6 +121,7 @@ class LibroController extends AbstractController
     #[Route('/libro/eliminar/{id}', name: 'libro_eliminar')]
     public function eliminar(Request $request,LibroRepository $libroRepository,Libro $libro) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($request->request->has('confirmar')){
             try {
                 $libroRepository->remove($libro);
@@ -141,6 +142,7 @@ class LibroController extends AbstractController
     #[Route('/libro/nuevo', name: 'libro_nuevo')]
     public function nuevo(Request $request, LibroRepository $libroRepository) : Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
         $libro = new Libro();
         $libroRepository->add($libro);
 

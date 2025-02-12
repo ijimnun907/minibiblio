@@ -3,7 +3,9 @@
 {% block title %} Libros {% endblock %}
 
 {% block body %}
-    <a href="{{ path('libro_nuevo') }}" class="btn btn-secondary">Registrar nuevo libro</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('libro_nuevo') }}" class="btn btn-secondary">Registrar nuevo libro</a>
+    {% endif %}
     <table border="1px">
         <tr>
             <th>Id</th>
@@ -30,7 +32,7 @@
                 {% else %}
                     <td>No prestado</td>
                 {% endif %}
-                <td><a href="{{ path('libro_modificar', {'id': libro.id}) }}" class="btn btn-secondary">Modificar</a><a href="{{ path('libro_eliminar', {'id': libro.id}) }}" class="btn btn-secondary">Eliminar</a></td>
+                <td><a href="{{ path('libro_modificar', {'id': libro.id}) }}" class="btn btn-secondary">Modificar</a>{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('libro_eliminar', {'id': libro.id}) }}" class="btn btn-secondary">Eliminar</a>{% endif %}</td>
             </tr>
         {% endfor %}
     </table>
