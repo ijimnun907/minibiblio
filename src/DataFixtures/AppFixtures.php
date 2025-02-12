@@ -33,8 +33,21 @@ class AppFixtures extends Fixture
             'esAdministrador' => true,
             'email' => 'admin@biblio.local',
             'clave' => $this->passwordHasher->hashPassword(new Socio(), 'admin'),
-            'esDocente' => true,
-            'esEstudiante' => false
+            'esDocente' => false,
+            'esEstudiante' => false,
+            'esBibliotecario' => false
+        ]);
+
+        SocioFactory::createOne([
+            'dni' => SocioFactory::faker()->unique()->dni(),
+            'nombre' => 'bibliotecario',
+            'apellidos' => 'bibliotecario',
+            'esAdministrador' => false,
+            'email' => 'bibliotecario@biblio.local',
+            'clave' => $this->passwordHasher->hashPassword(new Socio(), 'biblio'),
+            'esDocente' => false,
+            'esEstudiante' => false,
+            'esBibliotecario' => true
         ]);
 
         // Crear un socio DOCENTE
@@ -46,7 +59,8 @@ class AppFixtures extends Fixture
             'email' => 'docente@biblio.local',
             'clave' => $this->passwordHasher->hashPassword(new Socio(), 'docente'),
             'esDocente' => true,
-            'esEstudiante' => false
+            'esEstudiante' => false,
+            'esBibliotecario' => false
         ]);
 
         // Crear un socio ESTUDIANTE
@@ -58,7 +72,8 @@ class AppFixtures extends Fixture
             'email' => 'estudiante@biblio.local',
             'clave' => $this->passwordHasher->hashPassword(new Socio(), 'estudiante'),
             'esDocente' => false,
-            'esEstudiante' => true
+            'esEstudiante' => true,
+            'esBibliotecario' => false
         ]);
         SocioFactory::createMany(20, [
             'clave' => $this->passwordHasher->hashPassword(new Socio(), 'prueba')

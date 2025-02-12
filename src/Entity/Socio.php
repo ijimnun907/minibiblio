@@ -53,8 +53,11 @@ class Socio implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $clave = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'boolean')]
     private ?bool $esAdministrador = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $esBibliotecario = null;
 
     #[Assert\Callback]
     public function validarOpciones(ExecutionContextInterface $context): void
@@ -133,6 +136,17 @@ class Socio implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->esEstudiante = $esEstudiante;
 
+        return $this;
+    }
+
+    public function getEsBibliotecario(): ?bool
+    {
+        return $this->esBibliotecario;
+    }
+
+    public function setEsBibliotecario(?bool $esBibliotecario): Socio
+    {
+        $this->esBibliotecario = $esBibliotecario;
         return $this;
     }
 

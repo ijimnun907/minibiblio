@@ -60,7 +60,8 @@ final class SocioFactory extends PersistentProxyObjectFactory
             'nombre' => self::faker()->firstName(),
             'telefono' => self::faker()->numerify('6## ### ###'),
             'email' => self::faker()->unique()->email(),
-            'esAdministrador' => false
+            'esAdministrador' => false,
+            'esBibliotecario' => false
         ];
     }
 
