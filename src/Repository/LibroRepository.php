@@ -24,7 +24,7 @@ class LibroRepository extends ServiceEntityRepository
     public function findLibrosOrdenadosOrdenAlfabetico() : array
     {
         return $this->getEntityManager()
-            ->createQuery("SELECT l, e FROM App\Entity\Libro l JOIN l.editorial e ORDER BY l.titulo")
+            ->createQuery("SELECT l, e, s FROM App\Entity\Libro l JOIN l.editorial e LEFT JOIN l.socio s ORDER BY l.titulo")
             ->getResult();
     }
 

@@ -11,6 +11,7 @@
             <th>Año de Publicacion</th>
             <th>Paginas</th>
             <th>Editorial</th>
+            <th>Socio</th>
             <th>Acciones</th>
         </tr>
         {% for libro in libros %}
@@ -20,6 +21,15 @@
                 <td>{{ libro.anioPublicacion | date('d-m-Y') }}</td>
                 <td>{{ libro.paginas }}</td>
                 <td>{{ libro.editorial }}</td>
+                {% if libro.socio %}
+                    {% if is_granted('ROLE_DOCENTE') or is_granted('ROLE_BIBLIOTECARIO') %}
+                        <td>{{ libro.socio }}</td>
+                    {% else %}
+                        <td>Prestado</td>
+                    {% endif %}
+                {% else %}
+                    <td>No prestado</td>
+                {% endif %}
                 <td><a href="{{ path('libro_modificar', {'id': libro.id}) }}" class="btn btn-secondary">Modificar</a><a href="{{ path('libro_eliminar', {'id': libro.id}) }}" class="btn btn-secondary">Eliminar</a></td>
             </tr>
         {% endfor %}
