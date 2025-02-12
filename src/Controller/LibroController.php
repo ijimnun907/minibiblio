@@ -6,11 +6,13 @@ use App\Entity\Editorial;
 use App\Entity\Libro;
 use App\Form\LibroType;
 use App\Repository\LibroRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_USER')]
 class LibroController extends AbstractController
 {
     #[Route('/ap1', name: 'ap1')]

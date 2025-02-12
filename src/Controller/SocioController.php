@@ -5,11 +5,13 @@ namespace App\Controller;
 use App\Entity\Socio;
 use App\Form\SocioType;
 use App\Repository\SocioRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[IsGranted('ROLE_USER')]
 class SocioController extends AbstractController
 {
     #[Route('/socio/listar', name: 'socio_listar')]
