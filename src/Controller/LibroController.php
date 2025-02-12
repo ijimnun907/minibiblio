@@ -6,6 +6,7 @@ use App\Entity\Editorial;
 use App\Entity\Libro;
 use App\Form\LibroType;
 use App\Repository\LibroRepository;
+use App\Security\LibroVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -121,6 +122,7 @@ class LibroController extends AbstractController
     #[Route('/libro/eliminar/{id}', name: 'libro_eliminar')]
     public function eliminar(Request $request,LibroRepository $libroRepository,Libro $libro) : Response
     {
+        $this->denyAccessUnlessGranted(LibroVoter::DELETE, $libro);
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($request->request->has('confirmar')){
             try {
