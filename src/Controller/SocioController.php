@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Socio;
 use App\Form\SocioType;
 use App\Repository\SocioRepository;
+use App\Security\SocioVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,8 @@ class SocioController extends AbstractController
     #[Route('/socio/modificar/{id}', name: 'socio_modificar')]
     public function modificar(Request $request, SocioRepository $socioRepository, Socio $socio) : Response
     {
+        $this->denyAccessUnlessGranted(SocioVoter::EDIT, $socio);
+
         $form = $this->createForm(SocioType::class, $socio);
 
         $form->handleRequest($request);
@@ -55,6 +58,7 @@ class SocioController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/socio/eliminar/{id}', name: 'socio_eliminar')]
     public function eliminar(Request $request, SocioRepository $socioRepository, Socio $socio) : Response
     {

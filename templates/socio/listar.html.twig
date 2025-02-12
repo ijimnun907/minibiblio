@@ -25,7 +25,7 @@
                 <td>{{ socio.esDocente ? 'si' : 'no' }}</td>
                 <td>{{ socio.esEstudiante ? 'si' : 'no' }}</td>
                 <td>{{ socio.telefono }}</td>
-                <td><a href="{{ path('socio_modificar', {'id': socio.id}) }}" class="btn btn-secondary">Modificar</a><a href="{{ path('socio_eliminar', {'id': socio.id}) }}" class="btn btn-secondary">Eliminar</a></td>
+                <td>{% if is_granted('SOCIO_EDIT', socio) %}<a href="{{ path('socio_modificar', {'id': socio.id}) }}" class="btn btn-secondary">Modificar</a>{% endif %}{% if is_granted('ROLE_ADMIN') %}<a href="{{ path('socio_eliminar', {'id': socio.id}) }}" class="btn btn-secondary">Eliminar</a>{% endif %}</td>
             </tr>
         {% endfor %}
     </table>
