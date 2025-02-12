@@ -227,6 +227,15 @@ class Socio implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->esAdministrador){
             $roles[] = 'ROLE_ADMIN';
         }
+        elseif ($this->esBibliotecario){
+            $roles[] = 'ROLE_BIBLIOTECARIO';
+        }
+        elseif ($this->esDocente){
+            $roles[] = 'ROLE_DOCENTE';
+        }
+        elseif ($this->esEstudiante){
+            $roles[] = 'ROLE_ESTUDIANTE';
+        }
         return $roles;
     }
 
