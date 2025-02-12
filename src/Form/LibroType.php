@@ -17,9 +17,16 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class LibroType extends AbstractType
 {
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -61,7 +68,8 @@ class LibroType extends AbstractType
                 'placeholder' => 'No prestado',
                 'choice_label' => function (Socio $socio) {
                     return $socio->__toString() . ($socio->isEsDocente() ? '(docente)': '');
-                }
+                },
+                'disabled' => $this->security->isGranted('ROLE_DOCENTE') && !$this->security->isGranted('ROLE_ADMIN')
             ])
         ;
     }

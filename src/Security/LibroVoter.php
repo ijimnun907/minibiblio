@@ -5,9 +5,16 @@ namespace App\Security;
 use App\Entity\Libro;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 
 class LibroVoter extends Voter
 {
+    private Security $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
     const LIST = 'LIBRO_LIST';
     const EDIT = 'LIBRO_EDIT';
     const CREATE = 'LIBRO_CREATE';
@@ -39,6 +46,8 @@ class LibroVoter extends Voter
      */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
     {
+        $user = $token->getUser();
+
         if (!$subject instanceof Libro){
             return false;
         }
@@ -46,6 +55,8 @@ class LibroVoter extends Voter
         switch ($attribute) {
             case self::DELETE:
                 return $subject->getSocio() === null;
+            case self::EDIT:
+                return $this->security->isGranted('ROLE_BIBLIOTECARIO') || $subject->getSocio() === $user;
         }
     }
 }

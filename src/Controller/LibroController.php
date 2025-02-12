@@ -91,6 +91,7 @@ class LibroController extends AbstractController
     #[Route('/libro/modificar/{id}', name: 'libro_modificar')]
     public function modificar(Request $request, LibroRepository $libroRepository,Libro $libro) : Response
     {
+        $this->denyAccessUnlessGranted(LibroVoter::EDIT, $libro);
         $form = $this->createForm(LibroType::class, $libro);
 
         $form->handleRequest($request);
