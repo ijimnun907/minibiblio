@@ -75,6 +75,7 @@ class SocioController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/socio/nuevo', name: 'socio_nuevo')]
     public function nuevo(Request $request, SocioRepository $socioRepository) : Response
     {

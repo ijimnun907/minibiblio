@@ -3,7 +3,10 @@
 {% block title %} Socios listados {% endblock %}
 
 {% block body %}
-    <a href="{{ path('socio_nuevo') }}" class="btn btn-secondary">Socio nuevo</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('socio_nuevo') }}" class="btn btn-secondary">Socio nuevo</a>
+    {% endif %}
+
     <table border="1px">
         <tr>
             <th>Dni</th>
