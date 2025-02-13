@@ -102,7 +102,7 @@ class LibroController extends AbstractController
             try {
                 $libroRepository->save();
                 if ($nuevo){
-                    $this->addFlash('success', 'Vehiculo creado con exito');
+                    $this->addFlash('success', 'Libro creado con exito');
                 }
                 else {
                     $this->addFlash('success', 'Cambios guardados con exito');
