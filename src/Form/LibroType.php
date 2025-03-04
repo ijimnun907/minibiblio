@@ -69,7 +69,7 @@ class LibroType extends AbstractType
                 'choice_label' => function (Socio $socio) {
                     return $socio->__toString() . ($socio->isEsDocente() ? '(docente)': '');
                 },
-                'disabled' => $this->security->isGranted('ROLE_DOCENTE') && !$this->security->isGranted('ROLE_ADMIN')
+                'disabled' => $this->security->isGranted('ROLE_DOCENTE') && !$this->security->isGranted('ROLE_BIBLIOTECARIO')
             ])
         ;
     }
